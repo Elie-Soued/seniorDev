@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { QueryService } from '../../service/query.service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-landingpage',
@@ -12,12 +13,13 @@ import { FormsModule } from '@angular/forms';
 export class LandingpageComponent {
   username = '';
   password = '';
+  private URL_LOGIN = environment.URL_LOGIN;
 
   constructor(private queryService: QueryService, private router: Router) {}
 
   login() {
     this.queryService
-      .post('http://localhost:5000/users/login', {
+      .post(this.URL_LOGIN, {
         username: this.username,
         password: this.password,
       })
