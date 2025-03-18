@@ -13,6 +13,7 @@ import { environment } from '../../environments/environment';
 export class LandingpageComponent {
   username = '';
   password = '';
+  error = '';
   private URL_LOGIN = environment.URL_LOGIN;
 
   constructor(private queryService: QueryService, private router: Router) {}
@@ -24,12 +25,17 @@ export class LandingpageComponent {
         password: this.password,
       })
       .subscribe({
-        next: (response) => {
-          console.log(response);
-          this.router.navigate(['/dashboard']);
+        next: (response: any) => {
+          const { code, accessToken, message } = response;
+          if (code === 200) {
+            this.router.navigate(['/dashboard']);
+            localStorage.setItem('accessToken', accessToken);
+          } else {
+            this.error = message;
+          }
         },
-        error: (error) => {
-          console.log('error :>> ', error);
+        error: (error: any) => {
+          this.error = error.message;
         },
       });
   }

@@ -8,14 +8,17 @@
         <div class="d-flex justify-content-center m-4">
           <img src="assets/fundamental.png" class="img-fluid" />
         </div>
-        <form>
+        <form #loginForm="ngForm" (ngSubmit)="login()">
           <div class="d-flex justify-content-center p-2">
             <input
               type="text"
               name="username"
               class="form-control w-75"
+              required
               placeholder="Username"
               [(ngModel)]="username"
+              (ngModelChange)="error = ''"
+              #usernameInput="ngModel"
             />
           </div>
 
@@ -24,8 +27,11 @@
               type="password"
               name="password"
               class="form-control w-75"
+              required
               placeholder="Password"
               [(ngModel)]="password"
+              (ngModelChange)="error = ''"
+              #passwordInput="ngModel"
             />
           </div>
           <!-- Sign in + forgot password -->
@@ -35,8 +41,8 @@
             <div class="d-flex justify-content-center p-2">
               <button
                 class="btn btn-primary btn-block fa-lg mb-3 active w-75"
-                type="button"
-                (click)="login()"
+                [disabled]="!loginForm.form.valid"
+                type="submit"
               >
                 Log in
               </button>
@@ -54,6 +60,10 @@
             </a>
           </div>
         </form>
+
+        <div [hidden]="!this.error" class="alert alert-danger">
+          {{ error }}
+        </div>
       </div>
     </div>
     <div

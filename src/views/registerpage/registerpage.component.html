@@ -11,14 +11,19 @@
         <div class="d-flex justify-content-center m-4">
           <img src="assets/fundamental.png" class="img-fluid" />
         </div>
-        <form>
+        <form #registerForm="ngForm" (ngSubmit)="register()">
           <div class="d-flex justify-content-center p-2">
             <input
               type="email"
               name="email"
               class="form-control w-75"
+              required
               placeholder="Email"
               [(ngModel)]="email"
+              #emailInput="ngModel"
+              (ngModelChange)="error = ''"
+              ngModel
+              email="true"
             />
           </div>
           <div class="d-flex justify-content-center p-2">
@@ -26,8 +31,11 @@
               type="password"
               name="password"
               class="form-control w-75"
+              required
               placeholder="Password"
               [(ngModel)]="password"
+              #passwordInput="ngModel"
+              (ngModelChange)="error = ''"
             />
           </div>
           <div class="d-flex justify-content-center p-2">
@@ -35,8 +43,11 @@
               type="text"
               name="username"
               class="form-control w-75"
+              required
               placeholder="Username"
               [(ngModel)]="username"
+              #usernameInput="ngModel"
+              (ngModelChange)="error = ''"
             />
           </div>
 
@@ -45,8 +56,11 @@
               type="text"
               name="fullname"
               class="form-control w-75"
+              required
               placeholder="Full name"
               [(ngModel)]="fullname"
+              #fullnameInput="ngModel"
+              (ngModelChange)="error = ''"
             />
           </div>
 
@@ -57,14 +71,18 @@
             <div class="d-flex justify-content-center p-2">
               <button
                 class="btn btn-primary btn-block fa-lg mb-3 active w-75"
-                type="button"
-                (click)="register()"
+                [disabled]="!registerForm.form.valid"
+                type="submit"
               >
                 Register
               </button>
             </div>
           </div>
         </form>
+
+        <div [hidden]="!this.error" class="alert alert-danger">
+          {{ error }}
+        </div>
       </div>
     </div>
     <div

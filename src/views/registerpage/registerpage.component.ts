@@ -3,7 +3,6 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { QueryService } from '../../service/query.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { environment } from '../../environments/environment';
 
 @Component({
@@ -17,8 +16,8 @@ export class RegisterpageComponent {
   password = '';
   email = '';
   fullname = '';
-  arrow = faArrowLeft;
-  private URL_REGISTER = environment.URL_LOGIN;
+  error = '';
+  private URL_REGISTER = environment.URL_REGISTER;
 
   constructor(private queryService: QueryService, private router: Router) {}
 
@@ -35,8 +34,13 @@ export class RegisterpageComponent {
           console.log(response);
           this.router.navigate(['']);
         },
-        error: (error) => {
-          console.log('error :>> ', error);
+        error: (e) => {
+          if (e.message) {
+            this.error = e.message;
+          }
+          if (e.error.error) {
+            this.error = e.error.error;
+          }
         },
       });
   }
