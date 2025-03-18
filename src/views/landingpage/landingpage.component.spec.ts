@@ -22,4 +22,22 @@ describe('LandingpageComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('if login is successufll, token should be stored in localstorage and user should be redirected to dashboard', () => {
+    // to be written
+  });
+
+  it('if username or password is not entered, submit button should remain disabled', () => {
+    // to be written
+  });
+  it('if username and password are  entered, submit button should become enabled', () => {
+    // to be written
+  });
+
+  it('If user does not exist, the correct error should be displayed', () => {
+    // to be written
+  });
+  it('if password is wrong, the correct error should be displayed', () => {
+    // to be written
+  });
 });

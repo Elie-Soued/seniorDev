@@ -22,4 +22,24 @@ describe('RegisterpageComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('If all fields are not filled, submit button should remain disabled', () => {
+    // to be written
+  });
+
+  it('If email has not the correct format, submit button should remain disabled', () => {
+    // to be written
+  });
+
+  it('If all fields are filled, submit button should become enabled', () => {
+    // to be written
+  });
+
+  it('If user already exist, error should be shown', () => {
+    // to be written
+  });
+
+  it('If all correct data are entered and user does not exist previously, user should be redirected to the login page', () => {
+    // to be written
+  });
 });
