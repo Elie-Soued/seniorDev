@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { QueryService } from '../../service/query.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { environment } from '../../environments/environment';
 
 @Component({
@@ -17,6 +18,7 @@ export class RegisterpageComponent {
   email = '';
   fullname = '';
   error = '';
+  arrow = faArrowLeft;
   private URL_REGISTER = environment.URL_REGISTER;
 
   constructor(private queryService: QueryService, private router: Router) {}

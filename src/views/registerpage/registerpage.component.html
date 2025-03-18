@@ -80,6 +80,16 @@
           </div>
         </form>
 
+        <div class="d-flex align-items-center justify-content-center pb-4">
+          <p class="mb-0 me-2">Back to login</p>
+
+          <a href="/">
+            <button type="button" class="btn btn-outline-secondary">
+              <fa-icon [icon]="arrow"></fa-icon>
+            </button>
+          </a>
+        </div>
+
         <div [hidden]="!this.error" class="alert alert-danger">
           {{ error }}
         </div>
