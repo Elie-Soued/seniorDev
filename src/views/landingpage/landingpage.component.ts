@@ -26,10 +26,11 @@ export class LandingpageComponent {
       })
       .subscribe({
         next: (response: any) => {
-          const { code, accessToken, message } = response;
+          const { code, accessToken, message, user } = response;
           if (code === 200) {
             this.router.navigate(['/dashboard']);
             localStorage.setItem('accessToken', accessToken);
+            localStorage.setItem('fullname', user.fullname);
           } else {
             this.error = message;
           }
