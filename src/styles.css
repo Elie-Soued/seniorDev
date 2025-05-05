@@ -2,3 +2,50 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+@font-face {
+  font-family: 'FlatLion';
+  src: url('assets/fonts/Flatlion2.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+
+h1 {
+  font-family: 'FlatLion', sans-serif;
+  font-size: 100px;
+
+
+}
+
+
+
+
+@media  (max-width:1200px) {
+
+h1{
+  font-size: 80px;
+
+}
+
+}
+
+
+@media  (max-width:400px) {
+
+  h1{
+    font-size: 65px;
+  }
+
+  }
+
+
+
+  @media  (max-width:330px) {
+
+    h1{
+      font-size: 55px;
+    }
+
+    }
