@@ -49,7 +49,10 @@
             (removeTask)="getUserTasks()"
           ></app-taskcontainer>
           <div class="d-flex justify-content-center p-2">
-            <button class="btn btn-primary btn-block fa-lg mb-3 active w-75">
+            <button
+              class="btn btn-primary btn-block fa-lg mb-3 active w-75"
+              (click)="logout()"
+            >
               Logout
             </button>
           </div>

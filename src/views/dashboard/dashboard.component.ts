@@ -3,12 +3,13 @@ import { FormsModule } from '@angular/forms';
 import { TaskcontainerComponent } from '../../components/taskcontainer/taskcontainer.component';
 import { QueryService } from '../../service/query.service';
 import { environment } from '../../environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
   imports: [TaskcontainerComponent, FormsModule],
   templateUrl: './dashboard.component.html',
-  providers: [QueryService],
+  providers: [QueryService, Router],
 })
 export class DashboardComponent {
   tasks = [];
@@ -16,7 +17,7 @@ export class DashboardComponent {
 
   private URL = environment.URL;
 
-  constructor(private queryService: QueryService) {}
+  constructor(private queryService: QueryService, private router: Router) {}
 
   token = localStorage.getItem('accessToken');
 
@@ -71,5 +72,10 @@ export class DashboardComponent {
     this.newTask = '';
 
     this.getUserTasks();
+  }
+
+  logout() {
+    localStorage.removeItem('accessToken');
+    this.router.navigate(['/']);
   }
 }
