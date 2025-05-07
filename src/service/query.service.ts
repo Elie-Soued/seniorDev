@@ -8,11 +8,19 @@ import { Observable } from 'rxjs';
 export class QueryService {
   constructor(private http: HttpClient) {}
 
-  post(url: string, body: Object): Observable<any> {
-    return this.http.post(url, body);
+  post(url: string, body: Object, options: any): Observable<any> {
+    return this.http.post(url, body, options);
   }
 
-  get(url: string): Observable<any> {
-    return this.http.get(url);
+  get(url: string, headers: any): Observable<any> {
+    return this.http.get(url, headers);
+  }
+
+  delete(url: string, headers: any): Observable<any> {
+    return this.http.delete(url, headers);
+  }
+
+  update(url: string, body: Object, options: any): Observable<any> {
+    return this.http.put(url, body, options);
   }
 }

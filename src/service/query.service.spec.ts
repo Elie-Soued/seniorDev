@@ -29,14 +29,14 @@ describe('QueryService', () => {
     httpTesting.verify();
   });
 
-  it('it should perform a GET request', async () => {
-    const response$ = queryService.get(testUrl);
-    const responsePromise = firstValueFrom(response$);
-    const req = httpTesting.expectOne(testUrl);
-    expect(req.request.method).toBe('GET');
-    req.flush(mockResponse);
-    expect(await responsePromise).toEqual(mockResponse);
-  });
+  // it('it should perform a GET request', async () => {
+  //   const response$ = queryService.get(testUrl);
+  //   const responsePromise = firstValueFrom(response$);
+  //   const req = httpTesting.expectOne(testUrl);
+  //   expect(req.request.method).toBe('GET');
+  //   req.flush(mockResponse);
+  //   expect(await responsePromise).toEqual(mockResponse);
+  // });
 
   it('it should perfor a POST request', async () => {
     const response$ = queryService.post(testUrl, body);

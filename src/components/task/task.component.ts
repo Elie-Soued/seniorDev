@@ -1,18 +1,21 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { TaskcontainerComponent } from '../../components/taskcontainer/taskcontainer.component';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { QueryService } from '../../service/query.service';
 import { environment } from '../../environments/environment';
 
 @Component({
-  selector: 'app-dashboard',
-  imports: [TaskcontainerComponent, FormsModule],
-  templateUrl: './dashboard.component.html',
-  providers: [QueryService],
+  selector: 'app-task',
+  imports: [FontAwesomeModule],
+  templateUrl: './task.component.html',
 })
-export class DashboardComponent {
-  tasks = [];
-  newTask = '';
+export class TaskComponent {
+  @Input() task!: { content: string; id: number; userID: number };
+  @Output() removeTask = new EventEmitter();
+
+  delete = faTrash;
+  edit = faEdit;
+  updatedTask = '';
 
   private URL = environment.URL;
 
@@ -20,13 +23,9 @@ export class DashboardComponent {
 
   token = localStorage.getItem('accessToken');
 
-  ngOnInit() {
-    this.getUserTasks();
-  }
-
-  getUserTasks() {
+  deleteTask() {
     this.queryService
-      .get(this.URL, {
+      .delete(`${this.URL}/${this.task.id}`, {
         headers: {
           'Content-Type': 'application/json;charset=utf-8',
           'Access-Control-Allow-Origin': '*',
@@ -35,22 +34,22 @@ export class DashboardComponent {
       })
       .subscribe({
         next: (response: any) => {
-          this.tasks = response.tasks;
+          console.log(response);
         },
         error: (error: any) => {
           console.log('error :>> ', error);
         },
       });
+    this.removeTask.emit();
   }
 
-  addTask() {
+  updateTask() {
     this.queryService
-      .post(
-        this.URL,
+      .update(
+        `${this.URL}/${this.task.id}`,
 
-        {
-          newTask: this.newTask,
-        },
+        {},
+
         {
           headers: {
             'Content-Type': 'application/json;charset=utf-8',
@@ -67,9 +66,6 @@ export class DashboardComponent {
           console.log('error :>> ', error);
         },
       });
-
-    this.newTask = '';
-
-    this.getUserTasks();
+    this.removeTask.emit();
   }
 }

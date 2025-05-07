@@ -20,17 +20,26 @@ export class LandingpageComponent {
 
   login() {
     this.queryService
-      .post(this.URL_LOGIN, {
-        username: this.username,
-        password: this.password,
-      })
+      .post(
+        this.URL_LOGIN,
+        {
+          username: this.username,
+          password: this.password,
+        },
+
+        {
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8',
+            'Access-Control-Allow-Origin': '*',
+          },
+        }
+      )
       .subscribe({
         next: (response: any) => {
           const { code, accessToken, message, user } = response;
           if (code === 200) {
             this.router.navigate(['/dashboard']);
             localStorage.setItem('accessToken', accessToken);
-            localStorage.setItem('fullname', user.fullname);
           } else {
             this.error = message;
           }

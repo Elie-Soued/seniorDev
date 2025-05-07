@@ -25,12 +25,22 @@ export class RegisterpageComponent {
 
   register() {
     this.queryService
-      .post(this.URL_REGISTER, {
-        username: this.username,
-        password: this.password,
-        email: this.email,
-        fullname: this.fullname,
-      })
+      .post(
+        this.URL_REGISTER,
+
+        {
+          username: this.username,
+          password: this.password,
+          email: this.email,
+          fullname: this.fullname,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8',
+            'Access-Control-Allow-Origin': '*',
+          },
+        }
+      )
       .subscribe({
         next: (response) => {
           console.log(response);

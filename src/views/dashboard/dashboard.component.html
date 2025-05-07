@@ -1,20 +1,59 @@
-<div
-  class="p-0 p-lg-5"
-  style="background-color: #eee; border: '4px solid white'"
->
+<div class="p-0 p-lg-5" style="background-color: #eee">
   <div
     class="row g-0 col-12 col-lg-10 col-md-12 mx-auto"
     style="background-color: white; border-radius: 10px"
   >
     <div class="d-flex align-items-center col-lg-6 p-4">
-      <div class="d-flex flex-column w-100">
+      <div class="d-flex flex-column w-100 h-100">
         <div class="d-flex justify-content-center m-4">
           <h1>Flexy Tasks</h1>
         </div>
 
         <div
           class="d-flex flex-column justify-content-center text-center pt-1 mb-5 pb-1"
-        ></div>
+        >
+          <form
+            id="loginForm"
+            #loginForm="ngForm"
+            class="d-flex justify-content-center"
+          >
+            <div class="input-group mb-3 w-75">
+              <input
+                type="text"
+                class="form-control"
+                name="newTask"
+                id="newTask"
+                placeholder="Add a task to your todolist :)"
+                [(ngModel)]="newTask"
+                #newTaskInput="ngModel"
+              />
+              <div class="input-group-append">
+                <span
+                  class="input-group-text"
+                  id="basic-addon2"
+                  style="border-radius: 0px; padding: 0px"
+                >
+                  <button
+                    class="btn btn-primary active"
+                    style="border-radius: 0px"
+                    (click)="addTask()"
+                  >
+                    Add Task
+                  </button>
+                </span>
+              </div>
+            </div>
+          </form>
+          <app-taskcontainer
+            [tasks]="tasks"
+            (removeTask)="getUserTasks()"
+          ></app-taskcontainer>
+          <div class="d-flex justify-content-center p-2">
+            <button class="btn btn-primary btn-block fa-lg mb-3 active w-75">
+              Logout
+            </button>
+          </div>
+        </div>
       </div>
     </div>
     <div

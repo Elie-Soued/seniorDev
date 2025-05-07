@@ -1,0 +1,32 @@
+<div class="input-group mb-3 w-100">
+  <input
+    type="text"
+    class="form-control"
+    value="{{ task.content }}"
+    style="border: none; border-bottom: 1px solid #000"
+  />
+  <div class="input-group-append d-flex colum">
+    <span
+      class="input-group-text"
+      id="basic-addon2"
+      style="border-radius: 0px; padding: 0px; margin: 0px; border: none"
+    >
+      <button class="btn" style="border-radius: 0px; background-color: white">
+        <fa-icon [icon]="edit"></fa-icon>
+      </button>
+    </span>
+    <span
+      class="input-group-text"
+      id="basic-addon2"
+      style="border-radius: 0px; padding: 0px; margin: 0px; border: none"
+    >
+      <button
+        class="btn"
+        style="border-radius: 0px; background-color: white"
+        (click)="deleteTask()"
+      >
+        <fa-icon [icon]="delete"></fa-icon>
+      </button>
+    </span>
+  </div>
+</div>
