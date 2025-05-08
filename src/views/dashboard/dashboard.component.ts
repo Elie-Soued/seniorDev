@@ -62,7 +62,7 @@ export class DashboardComponent {
       )
       .subscribe({
         next: (response: any) => {
-          console.log(response);
+          this.tasks = response.tasks;
         },
         error: (error: any) => {
           console.log('error :>> ', error);
@@ -70,8 +70,6 @@ export class DashboardComponent {
       });
 
     this.newTask = '';
-
-    this.getUserTasks();
   }
 
   logout() {

@@ -44,10 +44,7 @@
               </div>
             </div>
           </form>
-          <app-taskcontainer
-            [tasks]="tasks"
-            (removeTask)="getUserTasks()"
-          ></app-taskcontainer>
+          <app-taskcontainer [tasks]="tasks"></app-taskcontainer>
           <div class="d-flex justify-content-center p-2">
             <button
               class="btn btn-primary btn-block fa-lg mb-3 active w-75"
