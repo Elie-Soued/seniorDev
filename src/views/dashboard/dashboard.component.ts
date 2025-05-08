@@ -4,16 +4,18 @@ import { TaskcontainerComponent } from '../../components/taskcontainer/taskconta
 import { QueryService } from '../../service/query.service';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [TaskcontainerComponent, FormsModule],
+  imports: [TaskcontainerComponent, FormsModule, FontAwesomeModule],
   templateUrl: './dashboard.component.html',
   providers: [QueryService, Router],
 })
 export class DashboardComponent {
   tasks = [];
-  newTask = '';
+  logoutIcon = faRightFromBracket;
 
   private URL = environment.URL;
 
@@ -22,10 +24,6 @@ export class DashboardComponent {
   token = localStorage.getItem('accessToken');
 
   ngOnInit() {
-    this.getUserTasks();
-  }
-
-  getUserTasks() {
     this.queryService
       .get(this.URL, {
         headers: {
@@ -42,34 +40,6 @@ export class DashboardComponent {
           console.log('error :>> ', error);
         },
       });
-  }
-
-  addTask() {
-    this.queryService
-      .post(
-        this.URL,
-
-        {
-          newTask: this.newTask,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json;charset=utf-8',
-            'Access-Control-Allow-Origin': '*',
-            authorization: this.token,
-          },
-        }
-      )
-      .subscribe({
-        next: (response: any) => {
-          this.tasks = response.tasks;
-        },
-        error: (error: any) => {
-          console.log('error :>> ', error);
-        },
-      });
-
-    this.newTask = '';
   }
 
   logout() {

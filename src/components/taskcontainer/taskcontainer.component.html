@@ -1,5 +1,34 @@
-@for(task of tasks; track task.id){
+<form id="loginForm" #loginForm="ngForm" class="d-flex justify-content-center">
+  <div class="input-group mb-3 w-75">
+    <input
+      type="text"
+      class="form-control"
+      name="newTask"
+      id="newTask"
+      placeholder="Add a task to your todolist :)"
+      [(ngModel)]="newTask"
+      #newTaskInput="ngModel"
+    />
+    <div class="input-group-append">
+      <span
+        class="input-group-text"
+        id="basic-addon2"
+        style="border-radius: 0px; padding: 0px"
+      >
+        <button
+          class="btn"
+          style="border-radius: 0px"
+          (click)="addTask()"
+          [disabled]="tasks.length >= 7"
+        >
+          <fa-icon [icon]="add"></fa-icon>
+        </button>
+      </span>
+    </div>
+  </div>
+</form>
 
+@for(task of tasks; track task.id){
 <div class="d-flex justify-content-center">
   <div class="input-group mb-3 w-75">
     <div class="w-100">
