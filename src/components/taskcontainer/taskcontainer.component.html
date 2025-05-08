@@ -3,7 +3,11 @@
 <div class="d-flex justify-content-center">
   <div class="input-group mb-3 w-75">
     <div class="w-100">
-      <app-task [task]="task" (removeTask)="deleteTask($event)"></app-task>
+      <app-task
+        [task]="task"
+        (removeTask)="updateTask($event)"
+        (editTask)="updateTask($event)"
+      ></app-task>
     </div>
   </div>
 </div>

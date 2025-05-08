@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { TaskComponent } from '../task/task.component';
 
 @Component({
@@ -9,11 +9,9 @@ import { TaskComponent } from '../task/task.component';
 export class TaskcontainerComponent {
   @Input() tasks!: { content: string; id: number; userID: number }[];
 
-  deleteTask(tasks: any) {
+  updateTask(tasks: any) {
     this.tasks = tasks;
   }
-
-  editTask() {}
 
   checkTask() {}
 }

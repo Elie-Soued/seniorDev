@@ -4,14 +4,22 @@
     class="form-control"
     value="{{ task.content }}"
     style="border: none; border-bottom: 1px solid #000"
+    [disabled]="disabled"
+    [(ngModel)]="updatedTask"
+    #updatedTaskInput="ngModel"
   />
   <div class="input-group-append d-flex colum">
+    @if(disabled){
     <span
       class="input-group-text"
       id="basic-addon2"
       style="border-radius: 0px; padding: 0px; margin: 0px; border: none"
     >
-      <button class="btn" style="border-radius: 0px; background-color: white">
+      <button
+        class="btn"
+        style="border-radius: 0px; background-color: white"
+        (click)="enableTask()"
+      >
         <fa-icon [icon]="edit"></fa-icon>
       </button>
     </span>
@@ -28,5 +36,35 @@
         <fa-icon [icon]="delete"></fa-icon>
       </button>
     </span>
+
+    } @else{
+    <span
+      class="input-group-text"
+      id="basic-addon2"
+      style="border-radius: 0px; padding: 0px; margin: 0px; border: none"
+    >
+      <button
+        class="btn"
+        style="border-radius: 0px; background-color: white"
+        (click)="updateTask()"
+      >
+        <fa-icon [icon]="check"></fa-icon>
+      </button>
+    </span>
+    <span
+      class="input-group-text"
+      id="basic-addon2"
+      style="border-radius: 0px; padding: 0px; margin: 0px; border: none"
+    >
+      <button
+        class="btn"
+        style="border-radius: 0px; background-color: white"
+        (click)="disableTask()"
+      >
+        <fa-icon [icon]="undo"></fa-icon>
+      </button>
+    </span>
+
+    }
   </div>
 </div>
