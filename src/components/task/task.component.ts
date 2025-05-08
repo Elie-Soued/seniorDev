@@ -35,12 +35,12 @@ export class TaskComponent {
       .subscribe({
         next: (response: any) => {
           console.log(response);
+          this.removeTask.emit(response.tasks);
         },
         error: (error: any) => {
           console.log('error :>> ', error);
         },
       });
-    this.removeTask.emit();
   }
 
   updateTask() {

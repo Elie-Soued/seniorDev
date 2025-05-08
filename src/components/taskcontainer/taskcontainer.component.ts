@@ -8,10 +8,9 @@ import { TaskComponent } from '../task/task.component';
 })
 export class TaskcontainerComponent {
   @Input() tasks!: { content: string; id: number; userID: number }[];
-  @Output() removeTask = new EventEmitter();
 
-  deleteTask() {
-    this.removeTask.emit();
+  deleteTask(tasks: any) {
+    this.tasks = tasks;
   }
 
   editTask() {}
