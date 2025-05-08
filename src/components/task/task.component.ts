@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-task',
   imports: [FontAwesomeModule, FormsModule],
   templateUrl: './task.component.html',
+  styleUrl: './task.component.css',
 })
 export class TaskComponent {
   @Input() task!: { content: string; id: number; userID: number };

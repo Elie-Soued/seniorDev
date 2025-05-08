@@ -1,9 +1,9 @@
 <div class="input-group mb-3 w-100">
   <input
     type="text"
-    class="form-control"
+    class="form-control task"
+    [style.background-color]="disabled ? 'whitesmoke' : ''"
     value="{{ task.content }}"
-    style="border: none; border-bottom: 1px solid #000"
     [disabled]="disabled"
     [(ngModel)]="updatedTask"
     #updatedTaskInput="ngModel"
