@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TaskcontainerComponent } from '../../components/taskcontainer/taskcontainer.component';
 import { QueryService } from '../../service/query.service';
@@ -6,6 +6,7 @@ import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { type task } from '../../types/type';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,12 +15,14 @@ import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
   providers: [QueryService, Router],
 })
 export class DashboardComponent {
-  tasks = [];
+  tasks: task[] = [];
   logoutIcon = faRightFromBracket;
 
   private URL = environment.URL;
 
-  constructor(private queryService: QueryService, private router: Router) {}
+  private queryService = inject(QueryService);
+
+  constructor(private router: Router) {}
 
   token = localStorage.getItem('accessToken');
 
@@ -27,16 +30,14 @@ export class DashboardComponent {
     this.queryService
       .get(this.URL, {
         headers: {
-          'Content-Type': 'application/json;charset=utf-8',
-          'Access-Control-Allow-Origin': '*',
-          authorization: this.token,
+          authorization: this.token!,
         },
       })
       .subscribe({
-        next: (response: any) => {
-          this.tasks = response.tasks;
+        next: (tasks: task[] | []) => {
+          this.tasks = tasks;
         },
-        error: (error: any) => {
+        error: (error: unknown) => {
           console.log('error :>> ', error);
         },
       });

@@ -5,6 +5,7 @@ import { QueryService } from '../../service/query.service';
 import { environment } from '../../environments/environment';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { type task } from '../../types/type';
 
 @Component({
   selector: 'app-taskcontainer',
@@ -22,7 +23,7 @@ export class TaskcontainerComponent {
 
   private URL = environment.URL;
 
-  updateTask(tasks: any) {
+  updateTask(tasks: task[]) {
     this.tasks = tasks;
   }
 
@@ -36,17 +37,15 @@ export class TaskcontainerComponent {
         },
         {
           headers: {
-            'Content-Type': 'application/json;charset=utf-8',
-            'Access-Control-Allow-Origin': '*',
-            authorization: this.token,
+            authorization: this.token!,
           },
         }
       )
       .subscribe({
-        next: (response: any) => {
-          this.tasks = response.tasks;
+        next: (tasks: task[]) => {
+          this.tasks = tasks;
         },
-        error: (error: any) => {
+        error: (error: unknown) => {
           console.log('error :>> ', error);
         },
       });

@@ -1,14 +1,15 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { QueryService } from '../../service/query.service';
+import { environment } from '../../environments/environment';
+import { FormsModule } from '@angular/forms';
+import { type task } from '../../types/type';
 import {
   faTrash,
   faEdit,
   faCheck,
   faTimes,
 } from '@fortawesome/free-solid-svg-icons';
-import { QueryService } from '../../service/query.service';
-import { environment } from '../../environments/environment';
-import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-task',
@@ -43,16 +44,14 @@ export class TaskComponent {
     this.queryService
       .delete(`${this.URL}/${this.task.id}`, {
         headers: {
-          'Content-Type': 'application/json;charset=utf-8',
-          'Access-Control-Allow-Origin': '*',
-          authorization: this.token,
+          authorization: this.token!,
         },
       })
       .subscribe({
-        next: (response: any) => {
-          this.removeTask.emit(response.tasks);
+        next: (tasks: task[]) => {
+          this.removeTask.emit(tasks);
         },
-        error: (error: any) => {
+        error: (error: unknown) => {
           console.error(error);
         },
       });
@@ -77,18 +76,15 @@ export class TaskComponent {
 
         {
           headers: {
-            'Content-Type': 'application/json;charset=utf-8',
-            'Access-Control-Allow-Origin': '*',
-            authorization: this.token,
+            authorization: this.token!,
           },
         }
       )
       .subscribe({
-        next: (response: any) => {
-          console.log(response);
-          this.editTask.emit(response.tasks);
+        next: (tasks: task[]) => {
+          this.editTask.emit(tasks);
         },
-        error: (error: any) => {
+        error: (error: unknown) => {
           console.log('error :>> ', error);
         },
       });

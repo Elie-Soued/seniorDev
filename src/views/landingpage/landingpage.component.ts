@@ -20,20 +20,10 @@ export class LandingpageComponent {
 
   login() {
     this.queryService
-      .post(
-        this.URL_LOGIN,
-        {
-          username: this.username,
-          password: this.password,
-        },
-
-        {
-          headers: {
-            'Content-Type': 'application/json;charset=utf-8',
-            'Access-Control-Allow-Origin': '*',
-          },
-        }
-      )
+      .post(this.URL_LOGIN, {
+        username: this.username,
+        password: this.password,
+      })
       .subscribe({
         next: (response: any) => {
           const { code, accessToken, message, user } = response;

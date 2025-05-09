@@ -33,12 +33,6 @@ export class RegisterpageComponent {
           password: this.password,
           email: this.email,
           fullname: this.fullname,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json;charset=utf-8',
-            'Access-Control-Allow-Origin': '*',
-          },
         }
       )
       .subscribe({
