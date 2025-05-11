@@ -5,7 +5,7 @@ import { QueryService } from '../../service/query.service';
 import { environment } from '../../environments/environment';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { type task, type addNewTaskPayload } from '../../types/type';
+import { type addNewTaskPayload, type task } from '../../types/type';
 
 @Component({
   selector: 'app-taskcontainer',
@@ -15,7 +15,7 @@ import { type task, type addNewTaskPayload } from '../../types/type';
 export class TaskcontainerComponent {
   newTask = '';
   add = faPlus;
-  @Input() tasks!: { content: string; id: number; userID: number }[];
+  @Input() tasks!: task[];
 
   constructor(private queryService: QueryService) {}
 
