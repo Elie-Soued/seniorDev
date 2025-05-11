@@ -3,12 +3,17 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { QueryService } from '../../service/query.service';
 import { environment } from '../../environments/environment';
 import { FormsModule } from '@angular/forms';
-import { type task } from '../../types/type';
+import {
+  type task,
+  type updatedTask,
+  type checkedTask,
+} from '../../types/type';
 import {
   faTrash,
   faEdit,
   faCheck,
   faTimes,
+  faStrikethrough,
 } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -18,7 +23,7 @@ import {
   styleUrl: './task.component.css',
 })
 export class TaskComponent {
-  @Input() task!: { content: string; id: number; userID: number };
+  @Input() task!: task;
   @Output() removeTask = new EventEmitter();
   @Output() editTask = new EventEmitter();
 
@@ -27,6 +32,8 @@ export class TaskComponent {
   check = faCheck;
   undo = faTimes;
   updatedTask = '';
+  checked = false;
+  strikethrough = faStrikethrough;
 
   disabled = true;
 
@@ -38,6 +45,7 @@ export class TaskComponent {
 
   ngOnInit() {
     this.updatedTask = this.task.content;
+    this.checked = this.task.checked;
   }
 
   deleteTask() {
@@ -62,16 +70,43 @@ export class TaskComponent {
   }
 
   disableTask() {
-    this.disabled = true;
+    this.task.content = '';
   }
 
   updateTask() {
     this.queryService
-      .update(
+      .update<updatedTask>(
         `${this.URL}/${this.task.id}`,
 
         {
           updatedTask: this.updatedTask,
+        },
+
+        {
+          headers: {
+            authorization: this.token!,
+          },
+        }
+      )
+      .subscribe({
+        next: (tasks: task[]) => {
+          this.editTask.emit(tasks);
+        },
+        error: (error: unknown) => {
+          console.log('error :>> ', error);
+        },
+      });
+
+    this.disabled = true;
+  }
+
+  checkTask(checked: boolean) {
+    this.queryService
+      .update<checkedTask>(
+        `${this.URL}/${this.task.id}`,
+
+        {
+          checkedTask: checked,
         },
 
         {

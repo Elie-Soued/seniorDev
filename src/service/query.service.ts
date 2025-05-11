@@ -26,9 +26,9 @@ export class QueryService {
     return this.http.delete<task[]>(url, header);
   }
 
-  update(
+  update<TBody>(
     url: string,
-    body: updatedTask,
+    body: TBody,
     header: authHeader
   ): Observable<task[]> {
     return this.http.put<task[]>(url, body, header);

@@ -37,6 +37,10 @@ type updatedTask = {
   updatedTask: string;
 };
 
+type checkedTask = {
+  checkedTask: boolean;
+};
+
 type authHeader = {
   headers: {
     authorization: string;
@@ -46,6 +50,7 @@ type authHeader = {
 type task = {
   id: number;
   content: string;
+  checked: boolean;
   userID: number;
 };
 
@@ -58,6 +63,7 @@ export type {
   accessToken,
   loginErrorMessage,
   updatedTask,
+  checkedTask,
   authHeader,
   task,
 };

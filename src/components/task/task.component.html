@@ -1,8 +1,9 @@
-<div class="input-group mb-3 w-100">
+<div class="input-group mb-3 w-100" style="border: 1px solid lightgrey">
   <input
     type="text"
     class="form-control task"
     [style.background-color]="disabled ? 'whitesmoke' : ''"
+    [style.text-decoration]="checked ? 'line-through' : ''"
     value="{{ task.content }}"
     [disabled]="disabled"
     [(ngModel)]="updatedTask"
@@ -10,6 +11,20 @@
   />
   <div class="input-group-append d-flex colum">
     @if(disabled){
+
+    <span
+      class="input-group-text"
+      id="basic-addon2"
+      style="border-radius: 0px; padding: 0px; margin: 0px; border: none"
+    >
+      <button
+        class="btn"
+        style="border-radius: 0px; background-color: white"
+        (click)="checked = !checked; checkTask(checked)"
+      >
+        <fa-icon [icon]="strikethrough"></fa-icon>
+      </button>
+    </span>
     <span
       class="input-group-text"
       id="basic-addon2"

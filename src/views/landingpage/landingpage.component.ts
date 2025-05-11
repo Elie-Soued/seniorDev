@@ -35,8 +35,8 @@ export class LandingpageComponent {
             this.error = message;
           }
         },
-        error: (error: Error) => {
-          this.error = error.message;
+        error: (e: any) => {
+          this.error = e.error.message;
         },
       });
   }
