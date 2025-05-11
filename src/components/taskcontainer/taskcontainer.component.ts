@@ -5,7 +5,7 @@ import { QueryService } from '../../service/query.service';
 import { environment } from '../../environments/environment';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { type task } from '../../types/type';
+import { type task, type addNewTaskPayload } from '../../types/type';
 
 @Component({
   selector: 'app-taskcontainer',
@@ -29,7 +29,7 @@ export class TaskcontainerComponent {
 
   addTask() {
     this.queryService
-      .post(
+      .post<task[], addNewTaskPayload>(
         this.URL,
 
         {
@@ -45,7 +45,7 @@ export class TaskcontainerComponent {
         next: (tasks: task[]) => {
           this.tasks = tasks;
         },
-        error: (error: unknown) => {
+        error: (error: Error) => {
           console.log('error :>> ', error);
         },
       });

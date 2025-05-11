@@ -3,6 +3,16 @@ type loginPayload = {
   password: string;
 };
 
+interface loginResponse {
+  code: number;
+  accessToken: string | undefined;
+  message: string | undefined;
+}
+
+interface registerError {
+  message: string;
+}
+
 type registerPayload = {
   username: string;
   password: string;
@@ -41,7 +51,9 @@ type task = {
 
 export type {
   loginPayload,
+  loginResponse,
   registerPayload,
+  registerError,
   addNewTaskPayload,
   accessToken,
   loginErrorMessage,

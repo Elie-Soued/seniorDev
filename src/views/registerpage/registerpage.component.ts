@@ -5,6 +5,7 @@ import { QueryService } from '../../service/query.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { environment } from '../../environments/environment';
+import { registerPayload, type registerError } from '../../types/type';
 
 @Component({
   selector: 'app-registerpage',
@@ -25,7 +26,7 @@ export class RegisterpageComponent {
 
   register() {
     this.queryService
-      .post(
+      .post<void | registerError, registerPayload>(
         this.URL_REGISTER,
 
         {
@@ -36,16 +37,12 @@ export class RegisterpageComponent {
         }
       )
       .subscribe({
-        next: (response) => {
-          console.log(response);
+        next: () => {
           this.router.navigate(['']);
         },
-        error: (e) => {
-          if (e.message) {
-            this.error = e.message;
-          }
-          if (e.error.error) {
-            this.error = e.error.error;
+        error: (e: any) => {
+          if (e.error) {
+            this.error = e.error.message;
           }
         },
       });

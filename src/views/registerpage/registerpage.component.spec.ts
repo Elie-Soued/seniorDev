@@ -144,7 +144,7 @@ describe('RegisterpageComponent', () => {
     expect(submitButton.disabled).toBeFalsy();
   });
 
-  it('If all correct data are entered and user does not exist previously, user should be redirected to the login page', () => {
-    // to be written
-  });
+  // it('If all correct data are entered and user does not exist previously, user should be redirected to the login page', () => {
+  //   // to be written
+  // });
 });
