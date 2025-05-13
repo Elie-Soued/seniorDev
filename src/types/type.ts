@@ -42,9 +42,7 @@ type checkedTask = {
 };
 
 type authHeader = {
-  headers: {
-    authorization: string;
-  };
+  authorization: string;
 };
 
 type task = {
@@ -52,6 +50,13 @@ type task = {
   content: string;
   checked: boolean;
   userID: number;
+};
+
+type taskResponse = {
+  meta: {
+    totalCount: number;
+  };
+  tasks: task[];
 };
 
 export type {
@@ -66,4 +71,5 @@ export type {
   checkedTask,
   authHeader,
   task,
+  taskResponse,
 };

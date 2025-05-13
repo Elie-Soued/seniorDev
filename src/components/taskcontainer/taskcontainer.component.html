@@ -15,12 +15,7 @@
         id="basic-addon2"
         style="border-radius: 0px; padding: 0px"
       >
-        <button
-          class="btn"
-          style="border-radius: 0px"
-          (click)="addTask()"
-          [disabled]="tasks.length >= 7"
-        >
+        <button class="btn" style="border-radius: 0px" (click)="addTask()">
           <fa-icon [icon]="add"></fa-icon>
         </button>
       </span>
@@ -34,6 +29,7 @@
     <div class="w-100">
       <app-task
         [task]="task"
+        [limit]="limit"
         (removeTask)="updateTask($event)"
         (editTask)="updateTask($event)"
       ></app-task>
@@ -41,4 +37,7 @@
   </div>
 </div>
 
+} @if(totalCount > limit){
+
+<app-pagination></app-pagination>
 }

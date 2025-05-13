@@ -1,8 +1,13 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { type updatedTask, authHeader, task } from '../types/type';
+import {
+  type updatedTask,
+  authHeader,
+  task,
+  taskResponse,
+} from '../types/type';
 
 @Injectable({
   providedIn: 'root',
@@ -13,24 +18,34 @@ export class QueryService {
   post<TResponse, TBody>(
     url: string,
     body: TBody,
-    headers?: authHeader
+    headers?: authHeader,
+    params?: HttpParams
   ): Observable<TResponse> {
-    return this.http.post<TResponse>(url, body, headers);
+    return this.http.post<TResponse>(url, body, { headers, params });
   }
 
-  get(url: string, header: authHeader): Observable<task[]> {
-    return this.http.get<task[]>(url, header);
+  get(
+    url: string,
+    headers: authHeader,
+    params: HttpParams
+  ): Observable<taskResponse> {
+    return this.http.get<taskResponse>(url, { headers, params });
   }
 
-  delete(url: string, header: authHeader): Observable<task[]> {
-    return this.http.delete<task[]>(url, header);
+  delete(
+    url: string,
+    headers: authHeader,
+    params: HttpParams
+  ): Observable<taskResponse> {
+    return this.http.delete<taskResponse>(url, { headers, params });
   }
 
   update<TBody>(
     url: string,
     body: TBody,
-    header: authHeader
-  ): Observable<task[]> {
-    return this.http.put<task[]>(url, body, header);
+    headers: authHeader,
+    params: HttpParams
+  ): Observable<taskResponse> {
+    return this.http.put<taskResponse>(url, body, { headers, params });
   }
 }

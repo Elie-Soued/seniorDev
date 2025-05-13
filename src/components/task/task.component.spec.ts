@@ -7,7 +7,7 @@ import { TaskComponent } from './task.component';
 describe('TaskComponent', () => {
   let component: TaskComponent;
   let fixture: ComponentFixture<TaskComponent>;
-  const task = { id: 1, content: 'task1', userID: 1 };
+  const task = { id: 1, content: 'task1', userID: 1, checked: false };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

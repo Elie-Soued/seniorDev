@@ -1,15 +1,24 @@
-<div class="input-group mb-3 w-100" style="border: 1px solid lightgrey">
-  <input
-    type="text"
-    class="form-control task"
-    [style.background-color]="disabled ? 'whitesmoke' : ''"
-    [style.text-decoration]="checked ? 'line-through' : ''"
-    value="{{ task.content }}"
-    [disabled]="disabled"
-    [(ngModel)]="updatedTask"
-    #updatedTaskInput="ngModel"
-  />
-  <div class="input-group-append d-flex colum">
+<div
+  class="input-group mb-3 w-100 d-flex flex-column flex-md-row"
+  style="border: 1px solid lightgrey"
+>
+  <div class="col" id="inputContainer">
+    <input
+      type="text"
+      class="form-control task"
+      [style.background-color]="disabled ? 'whitesmoke' : ''"
+      [style.text-decoration]="checked ? 'line-through' : ''"
+      value="{{ task.content }}"
+      [disabled]="disabled"
+      [(ngModel)]="updatedTask"
+      #updatedTaskInput="ngModel"
+    />
+  </div>
+
+  <div
+    class="input-group-append d-flex colum"
+    style="border-left: 1px solid lightgray"
+  >
     @if(disabled){
 
     <span

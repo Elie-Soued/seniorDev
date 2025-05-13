@@ -1,49 +1,69 @@
 import { Component, Input } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
 import { TaskComponent } from '../task/task.component';
+import { PaginationComponent } from '../../components/pagination/pagination.component';
+import { PaginationService } from '../../service/pagination.service';
 import { FormsModule } from '@angular/forms';
 import { QueryService } from '../../service/query.service';
 import { environment } from '../../environments/environment';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { type addNewTaskPayload, type task } from '../../types/type';
+import {
+  type addNewTaskPayload,
+  type task,
+  type taskResponse,
+} from '../../types/type';
 
 @Component({
   selector: 'app-taskcontainer',
-  imports: [TaskComponent, FormsModule, FontAwesomeModule],
+  imports: [TaskComponent, PaginationComponent, FormsModule, FontAwesomeModule],
   templateUrl: './taskcontainer.component.html',
 })
 export class TaskcontainerComponent {
   newTask = '';
   add = faPlus;
+  @Input() offset!: number;
   @Input() tasks!: task[];
+  @Input() limit!: number;
+  @Input() totalCount!: number;
 
-  constructor(private queryService: QueryService) {}
+  constructor(
+    private queryService: QueryService,
+    private paginationService: PaginationService
+  ) {}
 
   token = localStorage.getItem('accessToken');
 
   private URL = environment.URL;
 
-  updateTask(tasks: task[]) {
-    this.tasks = tasks;
+  updateTask(response: taskResponse) {
+    this.tasks = response.tasks;
+    this.totalCount = response.meta.totalCount;
   }
 
   addTask() {
+    const params = new HttpParams()
+      .set('offset', this.offset.toString())
+      .set('limit', this.limit.toString());
+
     this.queryService
-      .post<task[], addNewTaskPayload>(
+      .post<taskResponse, addNewTaskPayload>(
         this.URL,
 
         {
           newTask: this.newTask,
         },
+
         {
-          headers: {
-            authorization: this.token!,
-          },
-        }
+          authorization: this.token!,
+        },
+        params
       )
       .subscribe({
-        next: (tasks: task[]) => {
-          this.tasks = tasks;
+        next: (response: taskResponse) => {
+          this.tasks = response.tasks;
+          this.totalCount = response.meta.totalCount;
+          this.paginationService.emitTotalCount(this.totalCount);
         },
         error: (error: Error) => {
           console.log('error :>> ', error);

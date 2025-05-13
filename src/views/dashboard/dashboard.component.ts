@@ -1,41 +1,79 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { HttpParams } from '@angular/common/http';
 import { TaskcontainerComponent } from '../../components/taskcontainer/taskcontainer.component';
 import { QueryService } from '../../service/query.service';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
-import { type task } from '../../types/type';
+import { type task, type taskResponse } from '../../types/type';
+import { PaginationService } from '../../service/pagination.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
   imports: [TaskcontainerComponent, FormsModule, FontAwesomeModule],
   templateUrl: './dashboard.component.html',
-  providers: [QueryService, Router],
+  providers: [QueryService, Router, PaginationService],
 })
 export class DashboardComponent {
   tasks: task[] = [];
   logoutIcon = faRightFromBracket;
+  // Pagination Variables
+  totalCount = 0;
+  offset = 0;
+  limit = 5;
 
-  private URL = environment.URL;
-
+  // Subscriptions
+  private nextPageSub: Subscription = new Subscription();
+  private previousPageSub: Subscription = new Subscription();
   private queryService = inject(QueryService);
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private paginationService: PaginationService
+  ) {}
 
   token = localStorage.getItem('accessToken');
 
   ngOnInit() {
+    this.getAllTasks();
+
+    this.nextPageSub = this.paginationService.nextPage$.subscribe(() => {
+      this.offset = this.offset + this.limit;
+      this.paginationService.emitOffset(this.offset);
+      this.getAllTasks();
+    });
+
+    this.previousPageSub = this.paginationService.previousPage$.subscribe(
+      () => {
+        this.offset = this.offset - this.limit;
+        this.paginationService.emitOffset(this.offset);
+        this.getAllTasks();
+      }
+    );
+  }
+
+  getAllTasks() {
+    const params = new HttpParams()
+      .set('offset', this.offset.toString())
+      .set('limit', this.limit.toString());
+
     this.queryService
-      .get(this.URL, {
-        headers: {
+      .get(
+        environment.URL,
+        {
           authorization: this.token!,
         },
-      })
+
+        params
+      )
       .subscribe({
-        next: (tasks: task[] | []) => {
-          this.tasks = tasks;
+        next: (response: taskResponse) => {
+          this.tasks = response.tasks;
+          this.totalCount = response.meta.totalCount;
+          this.paginationService.emitTotalCount(this.totalCount);
         },
         error: (error: unknown) => {
           console.log('error :>> ', error);
@@ -46,5 +84,10 @@ export class DashboardComponent {
   logout() {
     localStorage.removeItem('accessToken');
     this.router.navigate(['/']);
+  }
+
+  ngOnDestroy() {
+    this.nextPageSub?.unsubscribe();
+    this.previousPageSub?.unsubscribe();
   }
 }

@@ -12,7 +12,12 @@
         <div
           class="d-flex flex-column justify-content-center text-center pt-1 mb-5 pb-1 h-75"
         >
-          <app-taskcontainer [tasks]="tasks"></app-taskcontainer>
+          <app-taskcontainer
+            [tasks]="tasks"
+            [limit]="limit"
+            [totalCount]="totalCount"
+            [offset]="offset"
+          ></app-taskcontainer>
           <div class="d-flex justify-content-center p-2">
             <button
               class="btn btn-primary btn-block fa-lg mb-3 active w-75"

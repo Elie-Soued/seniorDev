@@ -1,12 +1,16 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { QueryService } from '../../service/query.service';
+import { PaginationService } from '../../service/pagination.service';
 import { environment } from '../../environments/environment';
 import { FormsModule } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { HttpParams } from '@angular/common/http';
 import {
   type task,
   type updatedTask,
   type checkedTask,
+  taskResponse,
 } from '../../types/type';
 import {
   faTrash,
@@ -14,6 +18,7 @@ import {
   faCheck,
   faTimes,
   faStrikethrough,
+  faBroom,
 } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -23,41 +28,70 @@ import {
   styleUrl: './task.component.css',
 })
 export class TaskComponent {
+  //Inputs and Outputs
   @Input() task!: task;
+  @Input() limit!: number;
   @Output() removeTask = new EventEmitter();
   @Output() editTask = new EventEmitter();
 
+  //Subscriptions
+  private offsetSub: Subscription = new Subscription();
+  private totalCountSub: Subscription = new Subscription();
+
+  // Icons
   delete = faTrash;
   edit = faEdit;
   check = faCheck;
   undo = faTimes;
-  updatedTask = '';
-  checked = false;
+  broom = faBroom;
   strikethrough = faStrikethrough;
 
+  //Variables related to the task
+  updatedTask = '';
+  checked = false;
   disabled = true;
 
-  private URL = environment.URL;
+  // Pagination values that are updated
+  offset = 0;
+  totalCount = 0;
 
-  constructor(private queryService: QueryService) {}
+  constructor(
+    private queryService: QueryService,
+    private paginationService: PaginationService
+  ) {}
 
   token = localStorage.getItem('accessToken');
 
   ngOnInit() {
     this.updatedTask = this.task.content;
     this.checked = this.task.checked;
+
+    this.offsetSub = this.paginationService.offset$.subscribe((data) => {
+      this.offset = data;
+    });
+
+    this.totalCountSub = this.paginationService.totalCount$.subscribe(
+      (data) => {
+        this.totalCount = data;
+      }
+    );
   }
 
   deleteTask() {
+    const params = this.prepareParams();
+
     this.queryService
-      .delete(`${this.URL}/${this.task.id}`, {
-        headers: {
+      .delete(
+        `${environment.URL}/${this.task.id}`,
+        {
           authorization: this.token!,
         },
-      })
+
+        params
+      )
       .subscribe({
-        next: (tasks: task[]) => {
-          this.removeTask.emit(tasks);
+        next: (response: taskResponse) => {
+          this.removeTask.emit(response);
         },
         error: (error: unknown) => {
           console.error(error);
@@ -74,22 +108,23 @@ export class TaskComponent {
   }
 
   updateTask() {
+    const params = this.prepareParams();
+
     this.queryService
       .update<updatedTask>(
-        `${this.URL}/${this.task.id}`,
+        `${environment.URL}/${this.task.id}`,
 
         {
           updatedTask: this.updatedTask,
         },
 
         {
-          headers: {
-            authorization: this.token!,
-          },
-        }
+          authorization: this.token!,
+        },
+        params
       )
       .subscribe({
-        next: (tasks: task[]) => {
+        next: (tasks: taskResponse) => {
           this.editTask.emit(tasks);
         },
         error: (error: unknown) => {
@@ -101,22 +136,23 @@ export class TaskComponent {
   }
 
   checkTask(checked: boolean) {
+    const params = this.prepareParams();
+
     this.queryService
       .update<checkedTask>(
-        `${this.URL}/${this.task.id}`,
+        `${environment.URL}/${this.task.id}`,
 
         {
           checkedTask: checked,
         },
 
         {
-          headers: {
-            authorization: this.token!,
-          },
-        }
+          authorization: this.token!,
+        },
+        params
       )
       .subscribe({
-        next: (tasks: task[]) => {
+        next: (tasks: taskResponse) => {
           this.editTask.emit(tasks);
         },
         error: (error: unknown) => {
@@ -125,5 +161,16 @@ export class TaskComponent {
       });
 
     this.disabled = true;
+  }
+
+  ngOnDestroy() {
+    this.offsetSub?.unsubscribe();
+    this.totalCountSub?.unsubscribe();
+  }
+
+  prepareParams() {
+    return new HttpParams()
+      .set('offset', this.offset.toString())
+      .set('limit', this.limit.toString());
   }
 }
