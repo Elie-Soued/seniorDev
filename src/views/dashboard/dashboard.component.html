@@ -13,6 +13,7 @@
           class="d-flex flex-column justify-content-center text-center pt-1 mb-5 pb-1 h-75"
         >
           <app-taskcontainer
+            id="taskContainer"
             [tasks]="tasks"
             [limit]="limit"
             [totalCount]="totalCount"
@@ -20,6 +21,7 @@
           ></app-taskcontainer>
           <div class="d-flex justify-content-center p-2">
             <button
+              id="logout"
               class="btn btn-primary btn-block fa-lg mb-3 active w-75"
               (click)="logout()"
             >
@@ -27,6 +29,7 @@
             </button>
           </div>
         </div>
+        <footer class="text-center">a PilexlaFlex project</footer>
       </div>
     </div>
     <div

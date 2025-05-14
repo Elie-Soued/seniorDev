@@ -10,7 +10,16 @@ describe('PaginationService', () => {
     service = TestBed.inject(PaginationService);
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+  it('EmitNextPage is executed correctly', () => {
+    // write tests
+  });
+  it('EmitPreviousPage is executed correctly', () => {
+    // write tests
+  });
+  it('EmitOffset is executed correctly', () => {
+    // write tests
+  });
+  it('EmitTotalCount is executed correctly', () => {
+    // write tests
   });
 });

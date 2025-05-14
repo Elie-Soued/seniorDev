@@ -19,9 +19,32 @@ describe('TaskComponent', () => {
     component = fixture.componentInstance;
   });
 
-  it('should create', () => {
+  it('Task Component is correctly rendered', () => {
     component.task = task; // Set the input
     fixture.detectChanges(); // Trigger Angular lifecycle
     expect(component).toBeTruthy();
+  });
+
+  it('Delete task is correctly executed', () => {
+    // write test
+  });
+
+  it('Update task is correctly executed in task', () => {
+    // write test
+  });
+  it('Enable task is correctly executed', () => {
+    // write test
+  });
+
+  it('Disable task is correctly executed', () => {
+    // write test
+  });
+
+  it('Check task is correctly executed', () => {
+    // write test
+  });
+
+  it(' Subscriptions are removed in ngOnDestroy in the TaskComponent', () => {
+    // write test
   });
 });
