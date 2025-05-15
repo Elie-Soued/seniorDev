@@ -22,7 +22,7 @@ import {
 export class TaskcontainerComponent {
   newTask = '';
   add = faPlus;
-  deleteAll = faTrashAlt;
+  deleteAllIcon = faTrashAlt;
   @Input() offset!: number;
   @Input() tasks!: task[];
   @Input() limit!: number;
@@ -72,5 +72,31 @@ export class TaskcontainerComponent {
       });
 
     this.newTask = '';
+  }
+
+  deleteAll(): void {
+    const params = new HttpParams()
+      .set('offset', this.offset.toString())
+      .set('limit', this.limit.toString());
+
+    this.queryService
+      .delete(
+        `${environment.URL}`,
+        {
+          authorization: this.token!,
+        },
+
+        params
+      )
+      .subscribe({
+        next: (response: taskResponse) => {
+          this.tasks = response.tasks;
+          this.totalCount = response.meta.totalCount;
+          this.paginationService.emitTotalCount(this.totalCount);
+        },
+        error: (error: unknown) => {
+          console.error(error);
+        },
+      });
   }
 }

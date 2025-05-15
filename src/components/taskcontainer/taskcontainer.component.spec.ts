@@ -89,4 +89,11 @@ describe('TaskcontainerComponent', () => {
 
     expect(paginationComponent2).toBeFalsy();
   });
+
+  it('Delete all task is correctly executed', () => {
+    const deleteButton = fixture.debugElement.query(By.css('#deleteAll'));
+    const deleteFunction = spyOn(component, 'deleteAll');
+    deleteButton.nativeElement.click();
+    expect(deleteFunction).toHaveBeenCalled();
+  });
 });
