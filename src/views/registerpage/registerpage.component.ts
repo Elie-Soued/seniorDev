@@ -24,7 +24,7 @@ export class RegisterpageComponent {
 
   constructor(private queryService: QueryService, private router: Router) {}
 
-  register() {
+  register(): void {
     this.queryService
       .post<void | registerError, registerPayload>(
         this.URL_REGISTER,

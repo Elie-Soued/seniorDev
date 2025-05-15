@@ -17,7 +17,7 @@ export class PaginationComponent {
 
   constructor(private paginationService: PaginationService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.offsetSub = this.paginationService.offset$.subscribe((data) => {
       this.offset = data;
     });
@@ -29,15 +29,15 @@ export class PaginationComponent {
     );
   }
 
-  nextPage() {
+  nextPage(): void {
     this.paginationService.emitNextPage();
   }
 
-  previousPage() {
+  previousPage(): void {
     this.paginationService.emitPreviousPage();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.offsetSub?.unsubscribe();
     this.totalCountSub?.unsubscribe();
   }

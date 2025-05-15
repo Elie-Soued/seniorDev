@@ -6,7 +6,10 @@ import { QueryService } from '../../service/query.service';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import {
+  faRightFromBracket,
+  faTrashAlt,
+} from '@fortawesome/free-solid-svg-icons';
 import { type task, type taskResponse } from '../../types/type';
 import { PaginationService } from '../../service/pagination.service';
 import { Subscription } from 'rxjs';
@@ -20,24 +23,25 @@ import { Subscription } from 'rxjs';
 export class DashboardComponent {
   tasks: task[] = [];
   logoutIcon = faRightFromBracket;
+  deleteAll = faTrashAlt;
   // Pagination Variables
   totalCount = 0;
   offset = 0;
   limit = 5;
 
   // Subscriptions
-  private nextPageSub: Subscription = new Subscription();
-  private previousPageSub: Subscription = new Subscription();
+  public nextPageSub: Subscription = new Subscription();
+  public previousPageSub: Subscription = new Subscription();
   private queryService = inject(QueryService);
 
   constructor(
     private router: Router,
-    private paginationService: PaginationService
+    public paginationService: PaginationService
   ) {}
 
   token = localStorage.getItem('accessToken');
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getAllTasks();
 
     this.nextPageSub = this.paginationService.nextPage$.subscribe(() => {
@@ -55,7 +59,7 @@ export class DashboardComponent {
     );
   }
 
-  getAllTasks() {
+  getAllTasks(): void {
     const params = new HttpParams()
       .set('offset', this.offset.toString())
       .set('limit', this.limit.toString());
@@ -81,12 +85,12 @@ export class DashboardComponent {
       });
   }
 
-  logout() {
+  logout(): void {
     localStorage.removeItem('accessToken');
     this.router.navigate(['/']);
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.nextPageSub?.unsubscribe();
     this.previousPageSub?.unsubscribe();
   }

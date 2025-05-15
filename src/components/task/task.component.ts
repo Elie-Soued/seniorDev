@@ -62,7 +62,7 @@ export class TaskComponent {
 
   token = localStorage.getItem('accessToken');
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.updatedTask = this.task.content;
     this.checked = this.task.checked;
 
@@ -77,7 +77,7 @@ export class TaskComponent {
     );
   }
 
-  deleteTask() {
+  deleteTask(): void {
     const params = this.prepareParams();
 
     this.queryService
@@ -99,15 +99,15 @@ export class TaskComponent {
       });
   }
 
-  enableTask() {
+  enableTask(): void {
     this.disabled = false;
   }
 
-  disableTask() {
+  disableTask(): void {
     this.task.content = '';
   }
 
-  updateTask() {
+  updateTask(): void {
     const params = this.prepareParams();
 
     this.queryService
@@ -135,7 +135,7 @@ export class TaskComponent {
     this.disabled = true;
   }
 
-  checkTask(checked: boolean) {
+  checkTask(checked: boolean): void {
     const params = this.prepareParams();
 
     this.queryService
@@ -163,12 +163,12 @@ export class TaskComponent {
     this.disabled = true;
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.offsetSub?.unsubscribe();
     this.totalCountSub?.unsubscribe();
   }
 
-  prepareParams() {
+  prepareParams(): HttpParams {
     return new HttpParams()
       .set('offset', this.offset.toString())
       .set('limit', this.limit.toString());

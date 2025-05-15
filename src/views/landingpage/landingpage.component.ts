@@ -19,7 +19,7 @@ export class LandingpageComponent {
 
   constructor(private queryService: QueryService, private router: Router) {}
 
-  login() {
+  login(): void {
     this.queryService
       .post<loginResponse, loginPayload>(this.URL_LOGIN, {
         username: this.username,

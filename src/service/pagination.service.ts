@@ -17,19 +17,19 @@ export class PaginationService {
 
   constructor() {}
 
-  emitNextPage() {
+  emitNextPage(): void {
     this.nextPageService.next();
   }
 
-  emitPreviousPage() {
+  emitPreviousPage(): void {
     this.previousPageService.next();
   }
 
-  emitOffset(value: number) {
+  emitOffset(value: number): void {
     this.offsetService.next(value);
   }
 
-  emitTotalCount(value: number) {
+  emitTotalCount(value: number): void {
     this.totalCountService.next(value);
   }
 }
