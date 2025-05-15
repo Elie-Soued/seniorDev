@@ -30,8 +30,8 @@ export class DashboardComponent {
   limit = 5;
 
   // Subscriptions
-  public nextPageSub: Subscription = new Subscription();
-  public previousPageSub: Subscription = new Subscription();
+  private nextPageSub: Subscription = new Subscription();
+  private previousPageSub: Subscription = new Subscription();
   private queryService = inject(QueryService);
 
   constructor(

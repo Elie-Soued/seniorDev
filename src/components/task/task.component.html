@@ -5,6 +5,7 @@
   <div class="col" id="inputContainer">
     <input
       type="text"
+      id="task"
       class="form-control task"
       [style.background-color]="disabled ? 'whitesmoke' : ''"
       [style.text-decoration]="checked ? 'line-through' : ''"
@@ -28,6 +29,7 @@
     >
       <button
         class="btn"
+        id="enableButton"
         style="border-radius: 0px; background-color: white"
         (click)="enableTask()"
       >
@@ -41,6 +43,7 @@
     >
       <button
         class="btn"
+        id="strikethroughButton"
         style="border-radius: 0px; background-color: white"
         (click)="checked = !checked; checkTask(checked)"
       >
@@ -54,6 +57,7 @@
     >
       <button
         class="btn"
+        id="deleteButton"
         style="border-radius: 0px; background-color: white"
         (click)="deleteTask()"
       >
@@ -69,6 +73,7 @@
     >
       <button
         class="btn"
+        id="updateButton"
         style="border-radius: 0px; background-color: white"
         (click)="updateTask()"
       >
@@ -82,6 +87,7 @@
     >
       <button
         class="btn"
+        id="disableButton"
         style="border-radius: 0px; background-color: white"
         (click)="disableTask()"
       >

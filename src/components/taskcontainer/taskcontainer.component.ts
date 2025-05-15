@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { QueryService } from '../../service/query.service';
 import { environment } from '../../environments/environment';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import {
   type addNewTaskPayload,
   type task,
@@ -22,6 +22,7 @@ import {
 export class TaskcontainerComponent {
   newTask = '';
   add = faPlus;
+  deleteAll = faTrashAlt;
   @Input() offset!: number;
   @Input() tasks!: task[];
   @Input() limit!: number;
@@ -36,12 +37,12 @@ export class TaskcontainerComponent {
 
   private URL = environment.URL;
 
-  updateTask(response: taskResponse) {
+  updateTask(response: taskResponse): void {
     this.tasks = response.tasks;
     this.totalCount = response.meta.totalCount;
   }
 
-  addTask() {
+  addTask(): void {
     const params = new HttpParams()
       .set('offset', this.offset.toString())
       .set('limit', this.limit.toString());

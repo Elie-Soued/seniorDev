@@ -15,8 +15,20 @@
         id="basic-addon2"
         style="border-radius: 0px; padding: 0px"
       >
-        <button class="btn" style="border-radius: 0px" (click)="addTask()">
+        <button
+          class="btn"
+          id="addTaskButton"
+          style="border-radius: 0px"
+          (click)="addTask()"
+        >
           <fa-icon [icon]="add"></fa-icon>
+        </button>
+        <button
+          class="btn"
+          style="border-radius: 0px; border-left: 1px solid lightgray"
+          tooltip="deleteAll"
+        >
+          <fa-icon [icon]="deleteAll"></fa-icon>
         </button>
       </span>
     </div>
