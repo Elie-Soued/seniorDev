@@ -10,10 +10,10 @@ export class PaginationService {
   private offsetService = new BehaviorSubject<number>(0);
   private totalCountService = new BehaviorSubject<number>(0);
 
-  nextPage$ = this.nextPageService.asObservable();
-  previousPage$ = this.previousPageService.asObservable();
-  offset$ = this.offsetService.asObservable();
-  totalCount$ = this.totalCountService.asObservable();
+  public nextPage$ = this.nextPageService.asObservable();
+  public previousPage$ = this.previousPageService.asObservable();
+  public offset$ = this.offsetService.asObservable();
+  public totalCount$ = this.totalCountService.asObservable();
 
   constructor() {}
 
