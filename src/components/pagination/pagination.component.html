@@ -4,6 +4,7 @@
       <a
         class="page-link"
         style="cursor: pointer"
+        id="previous"
         [class.disabled]="offset === 0"
         (click)="previousPage()"
         >Previous</a
@@ -14,6 +15,7 @@
       <a
         class="page-link"
         style="cursor: pointer"
+        id="next"
         [class.disabled]="offset + limit >= totalCount"
         (click)="nextPage()"
       >

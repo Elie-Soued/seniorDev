@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { PaginationComponent } from './pagination.component';
+import { By } from '@angular/platform-browser';
 
 describe('PaginationComponent', () => {
   let component: PaginationComponent;
@@ -17,14 +17,25 @@ describe('PaginationComponent', () => {
   });
 
   it('Pagination component is rendered correctly', () => {
-    expect(component).toBeTruthy();
-  });
-
-  it('the next function is called correctly', () => {
-    // write test
+    const previous = fixture.debugElement.query(By.css('#previous'));
+    const next = fixture.debugElement.query(By.css('#next'));
+    expect(previous).toBeTruthy();
+    expect(next).toBeTruthy();
   });
 
   it('the previous function is called correctly', () => {
-    // write tesst
+    const previousFunction = spyOn(component, 'previousPage');
+    const previousBtn = fixture.debugElement.query(
+      By.css('#previous')
+    ).nativeElement;
+    previousBtn.click();
+    expect(previousFunction).toHaveBeenCalled();
+  });
+
+  it('the next function is called correctly', () => {
+    const nextFunction = spyOn(component, 'nextPage');
+    const nextBtn = fixture.debugElement.query(By.css('#next')).nativeElement;
+    nextBtn.click();
+    expect(nextFunction).toHaveBeenCalled();
   });
 });
