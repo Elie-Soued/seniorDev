@@ -24,7 +24,7 @@ describe('PaginationComponent', () => {
   });
 
   it('the previous function is called correctly', () => {
-    const previousFunction = spyOn(component, 'previousPage2');
+    const previousFunction = spyOn(component, 'previousPage');
     const previousBtn = fixture.debugElement.query(
       By.css('#previous')
     ).nativeElement;
